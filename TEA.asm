@@ -1,19 +1,46 @@
 TITLE TEA(Tiny Encryption Algorithm)   (Encryption.asm)
 
 INCLUDE C:\Irvine\Irvine32.inc
-
+.data?
+    MSG DWORD 99 DUP(?)         ; Empty memory for Input Message
+    LEN BYTE DUP(?)             ; Input Length
+    OUTER_COUNTER DWORD DUP(?)  ; Inner loop counter
+    DISPLAY_OUTER_COUNTER DWORD DUP(?)
+    
 .data 
     KEY_0 DWORD 1   ; Key
     KEY_1 DWORD 3
     KEY_2 DWORD 50
     KEY_3 DWORD 100
-
-    V_0 DWORD 150     ; Message
-    V_1 DWORD 336
-
+    
+    DELTA DWORD 9e3779b9H
+    SUM DWORD 0
+    INNER_COUNTER DWORD 32 
 
 .code 
 main PROC 
+    ; Taking Input Length from User *LENGTH SHOULD BE EVEN And Between 00 - 99*
+    ;----------------------------------------------
+    ; Translating 10^1
+    MOV AH, 1H      ;Code to read a character (Character Saved in AL)
+                    ; EAX = 00 00 AH(01) AL(00)
+    INT 21H         ;Dos Interrupt 
+                    ; EAX = 00 00 AH(01) AL(USER_INPUT1)
+    MOV AH, 0       ; EAX = 00 00 AH(00) AL(USER_INPUT1)
+    SUB AL, 48      ; Convert from ASCII to Number
+    MUL 10          ; AX = (USER_INPUT1 - 48)*10 
+    MOV LEN, AL     ; LEN = USER_INPUT1*10
+
+    ; Translating 10^0
+    MOV AH, 1H      ;Code to read a character (Character Saved in AL)
+                    ; EAX = 00 00 AH(01) AL(00)
+    INT 21H         ;Dos Interrupt 
+                    ; EAX = 00 00 AH(01) AL(USER_INPUT0)
+    MOV AH, 0       ; EAX = 00 00 AH(00) AL(USER_INPUT0)
+    SUB AL, 48      ; Convert from ASCII to Number
+    ADD LEN, AL     ; LEN = USER_INPUT1*10 + USER_INPUT0
+    ;----------------------------------------------
+    
     ; Begining of the loop
     MOV EDX, 0 
     MOV ECX, 32
