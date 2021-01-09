@@ -40,13 +40,37 @@ main PROC
     SUB AL, 48      ; Convert from ASCII to Number
     ADD LEN, AL     ; LEN = USER_INPUT1*10 + USER_INPUT0
     ;----------------------------------------------
+     ; Taking Input Message from User
+    ;----------------------------------------------
+    MOV ECX, LEN        ; ECX = length of input string
+    MOV EBX, 0
+    LOOP_MESSAGE:
+        MOV AH, 1H           ;Code to read a character (Character Saved in AL)
+                             ; EAX = 00 00 AH(01) AL(00)
+        INT 21H              ;Dos Interrupt 
+                             ; EAX = 00 00 AH(01) AL(USER_CHAR)
+        MOVZX MSG[EBX], AL   ; MSG = USER_CHAR *Relative addressing*
+        INC EBX 
+    LOOP LOOP_MESSAGE
+    ;----------------------------------------------
     
+    ; Encrypting the Whole Message
+    ;----------------------------------------------
+    MOVZX ECX, LEN          ; ECX = length of input string
+    MOV OUTER_COUNTER, ECX  ; OUTER_COUNTER = Length of string
+
+    MOV EDX, 0
+    MOV ECX, OUTER_COUNTER  ; ECX = OUTER_COUNTER
+    LOOP_ENCRYPT_MESSAGE:
+    ; Inner Loop
     ; Begining of the loop
-    MOV EDX, 0 
-    MOV ECX, 32
-    LOOP_I:
-        ; In use EAX , EDX , ECX , EBX
-        ADD EDX, 9e3779b9H  ; EDX += 0x9e3779b9
+        MOV SUM, 0              ; SUM = 0
+        MOV ECX, INNER_COUNTER  ; ECX = INNER_COUNTER
+        LOOP_I:
+            ; In use EAX(Temp) , ECX(Temp) , EBX(Temp)
+            MOV EBX, DELTA      ; EBX =  0x9e3779b9
+            ADD SUM, EBX        ; SUM += 0x9e3779b9
+
         ; Calculating V[0]
         MOV EAX, V_1        ; EAX = V[1]
         SHL EAX, 4          ; EAX = (V[1]<<4)
