@@ -31,6 +31,20 @@ main PROC
         XOR EAX, EBX        ; EAX = (V[0]<<4 + KEY[2]) ^ (V[0] + sum) ^ (V[0]>>5 + KEY[3])
         SUB V_1, EAX        ; V[1] -= (V[0]<<4 + KEY[2]) ^ (V[0] + sum) ^ (V[0]>>5 + KEY[3])
 
+; Calculating V[0]
+        MOV EAX, V_1        ; EAX = V[1]
+        SHL EAX, 4          ; EAX = (V[1]<<4)
+        ADD EAX, KEY_0      ; EAX = (V[1]<<4 + KEY[0])
+        MOV EBX, V_1        ; EBX = V[1]
+        ADD EBX, EDX        ; EBX = V[1] + sum
+        XOR EAX, EBX        ; EAX = (V[1]<<4 + KEY[0]) ^ (V[1] + sum)
+        MOV EBX, V_1        ; EBX = V[1]
+        SHR EBX, 5          ; EBX = V[1]>>5
+        ADD EBX, KEY_1      ; EBX = V[1]>>5 + KEY[1]
+        XOR EAX, EBX        ; EAX = (V[1]<<4 + KEY[0]) ^ (V[1] + sum) ^ (V[1]>>5 + KEY[1])
+        SUB V_0, EAX        ; V[0] -= (V[1]<<4 + KEY[0]) ^ (V[1] + sum) ^ V[1]>>5 + KEY[1]
+
+        SUB EDX, 9e3779b9H  ; EDX -= 0x9e3779b9
     LOOP LOOP_I
 
 main ENDP 
