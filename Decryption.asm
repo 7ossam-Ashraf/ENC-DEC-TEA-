@@ -119,11 +119,32 @@ COPY_LOOP:
 	ADD EBX, 1
 	ADD EDX, 4
 LOOP COPY_LOOP
-; MOV EAX, MSG_LEN
-; SHL EAX, 2
-; MOV MSG_ENC_LEN, EAX		; MSG_ENC_LEN = 4*MSG_LEN
 ;-------------------------------------------------------
 ;-------------------------------------------------------
+;-------------------------------------------------------
+; Display Output 
+
+CALL DrawLine
+MOV  EDX, OFFSET PROMPT2
+CALL WriteString
+MOV  EDX, OFFSET MSG
+CALL WriteString
+
+CALL Crlf 
+
+MOV  EDX, OFFSET PROMPT3
+CALL WriteString
+MOV  EDX, OFFSET MSG_ENC
+CALL WriteString
+
+CALL Crlf 
+
+CALL DrawLine
+
+;-------------------------------------------------------
+
+exit 
+
 main ENDP
 DrawLine PROC 
     MOV  EDX, OFFSET LINE_1
