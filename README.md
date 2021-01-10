@@ -1,1 +1,1 @@
-# ENC-DEC-TEA-
+# Tiny Encryption And Decryption Algorithm
