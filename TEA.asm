@@ -147,8 +147,15 @@ CALL DrawLine
 
 ;-------------------------------------------------------
 exit 
-
 main ENDP 
+;-------------------------------------------------------------------
+DrawLine PROC 
+    MOV  EDX, OFFSET LINE_1
+    CALL WriteString 
+    CALL Crlf                   ; Writes a carriage return/linefeed 
+                                ;sequence (0Dh,0Ah) to standard output.
+    RET 
+DrawLine ENDP 
+;-------------------------------------------------------------------
 
-main ENDP 
 END main 
