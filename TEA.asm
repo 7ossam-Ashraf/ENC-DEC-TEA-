@@ -65,7 +65,6 @@ MOV [EAX+EBX], EDX				; Extend The Message With a '0' Character to Become of Eve
 MOV EDX, 0
 MOV [EAX+EBX+1], EDX      ; Ending The Message with a NULL Character
 ADD MSG_LEN, 1				; MSG_LEN += 1
-EVEN_CASE:
 
     ; Encrypting the Whole Message
     ;----------------------------------------------
