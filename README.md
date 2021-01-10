@@ -1,6 +1,16 @@
 # Tiny Encryption And Decryption Algorithm
 ![137240366_1286628748403573_8758737440087715222_n](https://user-images.githubusercontent.com/77072323/104130438-64aade80-5379-11eb-9e30-dd35ffaa8645.png)
 
+## WHAT IS THE TINY ENCRYPTION ALGORITHM?
+
+
+#### • is one of the fastest and most efficient cryptographic algorithms
+#### • It is a Feistel cipher which uses operations from mixed (orthogonal) algebraic groups XOR, ADD and SHIFT in this case
+#### • Is providing Shannon's twin properties of diffusion and confusion which are necessary for a secure block cipher
+#### • It encrypts 64 data bits at a time using a 128 bit key
+#### • a one bit difference in the plaintext will cause approximately 32 bit differences in the ciphertext
+
+
 ## USAGE AND SELECTIONS
 
 
