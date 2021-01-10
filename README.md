@@ -42,3 +42,16 @@
 
 
 ![136654806_231669515187593_8362393164828897982_n](https://user-images.githubusercontent.com/77072323/104131269-0f250080-537e-11eb-8a5a-5b0f8d1ed9e9.png)
+## c CODE FOR DECRYPTION 
+
+
+![136767085_148810240340475_6845425757099889094_n](https://user-images.githubusercontent.com/77034137/104136547-a0f13580-539f-11eb-9a64-40ba370e8e2b.png)
+
+
+
+
+
+## the output
+
+
+![136504767_995781054164406_2213960694890753885_n](https://user-images.githubusercontent.com/77034137/104136555-ababca80-539f-11eb-8d30-d33ef02c6906.png)
