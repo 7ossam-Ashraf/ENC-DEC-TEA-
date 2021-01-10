@@ -35,41 +35,38 @@ KEY_3 DWORD 100
 
 .code 
 main PROC 
-    ; Taking Input Length from User *LENGTH SHOULD BE EVEN And Between 00 - 99*
-    ;----------------------------------------------
-    ; Translating 10^1
-    MOV AH, 1H      ;Code to read a character (Character Saved in AL)
-                    ; EAX = 00 00 AH(01) AL(00)
-    INT 21H         ;Dos Interrupt 
-                    ; EAX = 00 00 AH(01) AL(USER_INPUT1)
-    MOV AH, 0       ; EAX = 00 00 AH(00) AL(USER_INPUT1)
-    SUB AL, 48      ; Convert from ASCII to Number
-    MUL 10          ; AX = (USER_INPUT1 - 48)*10 
-    MOV LEN, AL     ; LEN = USER_INPUT1*10
 
-    ; Translating 10^0
-    MOV AH, 1H      ;Code to read a character (Character Saved in AL)
-                    ; EAX = 00 00 AH(01) AL(00)
-    INT 21H         ;Dos Interrupt 
-                    ; EAX = 00 00 AH(01) AL(USER_INPUT0)
-    MOV AH, 0       ; EAX = 00 00 AH(00) AL(USER_INPUT0)
-    SUB AL, 48      ; Convert from ASCII to Number
-    ADD LEN, AL     ; LEN = USER_INPUT1*10 + USER_INPUT0
-    ;----------------------------------------------
-     ; Taking Input Message from User
-    ;----------------------------------------------
-    MOV ECX, LEN        ; ECX = length of input string
-    MOV EBX, 0
-    LOOP_MESSAGE:
-        MOV AH, 1H           ;Code to read a character (Character Saved in AL)
-                             ; EAX = 00 00 AH(01) AL(00)
-        INT 21H              ;Dos Interrupt 
-                             ; EAX = 00 00 AH(01) AL(USER_CHAR)
-        MOVZX MSG[EBX], AL   ; MSG = USER_CHAR *Relative addressing*
-        INC EBX 
-    LOOP LOOP_MESSAGE
-    ;----------------------------------------------
-    
+CALL DrawLine               ; Draw Line  
+;-------------------------------------------------------
+; Prompt User to Enter the Length of String
+MOV  EDX, OFFSET PROMPT1
+CALL WriteString
+;-------------------------------------------------------
+;-------------------------------------------------------
+; Enter The Message
+MOV  EDX, OFFSET MSG
+MOV  ECX, MAX               ;buffer size - 1
+CALL ReadString
+;-------------------------------------------------------
+CALL DrawLine               ; Draw Line 
+;-------------------------------------------------------
+; Finding The Length of Message
+MOV  EDX, OFFSET MSG
+CALL StrLength
+MOV  MSG_LEN, EAX
+;-------------------------------------------------------
+TEST MSG_LEN, 1
+JZ EVEN_CASE
+; Odd Length
+MOV EAX, OFFSET MSG         ; ESI = Message Offset 
+MOV EBX, MSG_LEN
+MOV EDX, '!'
+MOV [EAX+EBX], EDX				; Extend The Message With a '0' Character to Become of Even Length
+MOV EDX, 0
+MOV [EAX+EBX+1], EDX      ; Ending The Message with a NULL Character
+ADD MSG_LEN, 1				; MSG_LEN += 1
+EVEN_CASE:
+
     ; Encrypting the Whole Message
     ;----------------------------------------------
     MOVZX ECX, LEN          ; ECX = length of input string
