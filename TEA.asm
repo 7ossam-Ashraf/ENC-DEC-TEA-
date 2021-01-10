@@ -65,6 +65,26 @@ MOV [EAX+EBX], EDX				; Extend The Message With a '0' Character to Become of Eve
 MOV EDX, 0
 MOV [EAX+EBX+1], EDX      ; Ending The Message with a NULL Character
 ADD MSG_LEN, 1				; MSG_LEN += 1
+EVEN_CASE:
+; Even Length
+;-------------------------------------------------------
+; Copy The Real Message into the Encrypted Message
+;INVOKE Str_copy, ADDR MSG, ADDR MSG_ENC
+; Extending the 8-bit characters into 32-bit characters
+MOV ECX, MSG_LEN
+MOV EBX, 0
+MOV EDX, 0
+COPY_LOOP:
+	MOVZX EAX, MSG[EBX]
+	MOV MSG_ENC[EDX], EAX 
+	ADD EBX, 1
+	ADD EDX, 4
+LOOP COPY_LOOP
+MOV EAX, MSG_LEN
+SHL EAX, 2
+MOV MSG_ENC_LEN, EAX		; MSG_ENC_LEN = 4*MSG_LEN
+;-------------------------------------------------------
+;-------------------------------------------------------
 
     ; Encrypting the Whole Message
     ;----------------------------------------------
