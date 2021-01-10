@@ -106,6 +106,24 @@ MESSAGE_LOOP:
 JMP MESSAGE_LOOP
 OUT_OF_LOOP:
 ;-------------------------------------------------------
+;-------------------------------------------------------
+; Copy The Encrypted Message into The Real Message
+MOV EAX, MSG_ENC_LEN
+SHR EAX, 2
+MOV ECX, EAX
+MOV EBX, 0
+MOV EDX, 0
+COPY_LOOP:
+    MOV EAX, MSG_ENC[EDX] 
+	MOV MSG[EBX], AL
+	ADD EBX, 1
+	ADD EDX, 4
+LOOP COPY_LOOP
+; MOV EAX, MSG_LEN
+; SHL EAX, 2
+; MOV MSG_ENC_LEN, EAX		; MSG_ENC_LEN = 4*MSG_LEN
+;-------------------------------------------------------
+;-------------------------------------------------------
 main ENDP
 DrawLine PROC 
     MOV  EDX, OFFSET LINE_1
