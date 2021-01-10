@@ -10,3 +10,14 @@
 #### • That implementations is three time fast and enhancement software implementation then DES that have 16 rounds
 #### • It is expected that security can be enhanced by increasing the number of iterations
 #### • The selections of algorithm (fast , safety , easy implantations , responsible (performance )
+
+
+## CODE EXPLAIN
+
+
+#### • Tiny encryption are used XOR and ADD to provide nonlinearity, and add and sub are used for encryption and decryption rather then XOR
+#### • A dual shift causes all bits of the key and data to be mixed repeatedly
+#### • The number of rounds can be 16 cycles ( 32 iterations) or 32 cycles ( 64 iterations
+#### • The key is set at 128 bits as this is enough to prevent simple search techniques from finding the key [ 4 ].
+#### • The constant number, delta, is derived from thegolden number ratio [ 4 ]
+####  𝒅𝒆𝒍𝒕𝒂=𝟓−𝟏∗𝟐𝟑𝟏=9E3779B9h
