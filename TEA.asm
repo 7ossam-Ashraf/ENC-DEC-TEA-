@@ -124,7 +124,31 @@ MOV MSG_ENC_LEN, EAX		; MSG_ENC_LEN = 4*MSG_LEN
         XOR EAX, EBX        ; EAX = (V[0]<<4 + KEY[2]) ^ (V[0] + sum) ^ (V[0]>>5 + KEY[3])
         ADD V_1, EAX        ; V[1] += (V[0]<<4 + KEY[2]) ^ (V[0] + sum) ^ (V[0]>>5 + KEY[3])
     LOOP LOOP_I
+;-------------------------------------------------------
+;-------------------------------------------------------
+; Display Output 
 
+CALL DrawLine
+MOV  EDX, OFFSET PROMPT2
+CALL WriteString
+MOV  EDX, OFFSET MSG
+CALL WriteString
+
+CALL Crlf 
+
+MOV  EDX, OFFSET PROMPT3
+CALL WriteString
+MOV  EDX, OFFSET MSG_ENC
+CALL WriteString
+
+CALL Crlf 
+
+CALL DrawLine
+
+;-------------------------------------------------------
+exit 
+
+main ENDP 
 
 main ENDP 
 END main 
