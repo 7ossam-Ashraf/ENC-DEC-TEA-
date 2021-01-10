@@ -111,19 +111,28 @@ MOV MSG_ENC_LEN, EAX		; MSG_ENC_LEN = 4*MSG_LEN
         XOR EAX, EBX                ; EAX = (V[1]<<4 + KEY[0]) ^ (V[1] + sum) ^ (V[1]>>5 + KEY[1])
         ADD [ESI], EAX              ; V[0] += (V[1]<<4 + KEY[0]) ^ (V[1] + sum) ^ V[1]>>5 + KEY[1]
 	
+
         ; Calculating V[1]
-        MOV EAX, V_0        ; EAX = V[0]
-        SHL EAX, 4          ; EAX = (V[0]<<4)
-        ADD EAX, KEY_2      ; EAX = (V[0]<<4 + KEY[2])
-        MOV EBX, V_0        ; EBX = V[0]
-        ADD EBX, EDX        ; EBX = V[0] + sum
-        XOR EAX, EBX        ; EAX = (V[0]<<4 + KEY[2]) ^ (V[0] + sum)
-        MOV EBX, V_0        ; EBX = V[0]
-        SHR EBX, 5          ; EBX = V[0]>>5
-        ADD EBX, KEY_3      ; EBX = V[0]>>5 + KEY[3]
-        XOR EAX, EBX        ; EAX = (V[0]<<4 + KEY[2]) ^ (V[0] + sum) ^ (V[0]>>5 + KEY[3])
-        ADD V_1, EAX        ; V[1] += (V[0]<<4 + KEY[2]) ^ (V[0] + sum) ^ (V[0]>>5 + KEY[3])
-    LOOP LOOP_I
+        MOV EAX, [ESI]              ; EAX = V[0]
+        SHL EAX, 4                  ; EAX = (V[0]<<4)
+        ADD EAX, KEY_2              ; EAX = (V[0]<<4 + KEY[2])
+        MOV EBX, [ESI]              ; EBX = V[0]
+        ADD EBX, SUM                ; EBX = V[0] + sum
+        XOR EAX, EBX                ; EAX = (V[0]<<4 + KEY[2]) ^ (V[0] + sum)
+        MOV EBX, [ESI]              ; EBX = V[0]
+        SHR EBX, 5                  ; EBX = V[0]>>5
+        ADD EBX, KEY_3              ; EBX = V[0]>>5 + KEY[3]
+        XOR EAX, EBX                ; EAX = (V[0]<<4 + KEY[2]) ^ (V[0] + sum) ^ (V[0]>>5 + KEY[3])
+        ADD [ESI+4], EAX            ; V[1] += (V[0]<<4 + KEY[2]) ^ (V[0] + sum) ^ (V[0]>>5 + KEY[3])
+    LOOP ENCRYPTION_LOOP
+
+	CMP ESI, EDX			; If ESI is at The End of MSG_ENC Then leave
+	JZ OUT_OF_LOOP
+    ADD ESI, 8
+
+JMP MESSAGE_LOOP
+OUT_OF_LOOP:
+        
 ;-------------------------------------------------------
 ;-------------------------------------------------------
 ; Display Output 
