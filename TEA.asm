@@ -86,22 +86,17 @@ MOV MSG_ENC_LEN, EAX		; MSG_ENC_LEN = 4*MSG_LEN
 ;-------------------------------------------------------
 ;-------------------------------------------------------
 
-    ; Encrypting the Whole Message
-    ;----------------------------------------------
-    MOVZX ECX, LEN          ; ECX = length of input string
-    MOV OUTER_COUNTER, ECX  ; OUTER_COUNTER = Length of string
-
-    MOV EDX, 0
-    MOV ECX, OUTER_COUNTER  ; ECX = OUTER_COUNTER
-    LOOP_ENCRYPT_MESSAGE:
-    ; Inner Loop
-    ; Begining of the loop
-        MOV SUM, 0              ; SUM = 0
-        MOV ECX, INNER_COUNTER  ; ECX = INNER_COUNTER
-        LOOP_I:
-            ; In use EAX(Temp) , ECX(Temp) , EBX(Temp)
-            MOV EBX, DELTA      ; EBX =  0x9e3779b9
-            ADD SUM, EBX        ; SUM += 0x9e3779b9
+ ; Encrypting the Whole Message
+        MOV ESI, OFFSET MSG_ENC     ; ESI is pointing at the beginig of the encrypted message
+        MOV EDX, OFFSET MSG_ENC		; EDX = Begining of MSG_ENC
+        ADD EDX, MSG_ENC_LEN		; EDX = MSG_ENC + 4*(Length)
+        SUB EDX, 8			; EDX = MSG_ENC + 4*(Length - 2)
+   MESSAGE_LOOP:
+        MOV ECX, 32 
+        MOV SUM, 0
+   ENCRYPTION_LOOP:
+        MOV EBX, DELTA      ; EBX =  0x9e3779b9
+        ADD SUM, EBX        ; SUM += 0x9e3779b9
 
         ; Calculating V[0]
         MOV EAX, V_1        ; EAX = V[1]
