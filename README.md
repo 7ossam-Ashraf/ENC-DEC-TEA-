@@ -55,3 +55,8 @@
 
 
 ![136504767_995781054164406_2213960694890753885_n](https://user-images.githubusercontent.com/77034137/104136555-ababca80-539f-11eb-8d30-d33ef02c6906.png)
+
+## output code Assembly language encryption and decryption
+
+
+![137333743_875797406524937_1148626798393614117_n](https://user-images.githubusercontent.com/77034137/104136294-deed5a00-539d-11eb-97e6-9e9e705b1ff2.png)
