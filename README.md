@@ -21,3 +21,6 @@
 #### • The key is set at 128 bits as this is enough to prevent simple search techniques from finding the key [ 4 ].
 #### • The constant number, delta, is derived from thegolden number ratio [ 4 ]
 ####  𝒅𝒆𝒍𝒕𝒂=𝟓−𝟏∗𝟐𝟑𝟏=9E3779B9h
+
+
+![137551308_3397240057054479_3141500891801217952_n](https://user-images.githubusercontent.com/77072323/104130728-054dce00-537b-11eb-98b8-47588e8c3235.png)
