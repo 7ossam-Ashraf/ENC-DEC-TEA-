@@ -1,21 +1,37 @@
 TITLE TEA(Tiny Encryption Algorithm)   (Encryption.asm)
 
-INCLUDE C:\Irvine\Irvine32.inc
 .data?
-    MSG DWORD 99 DUP(?)         ; Empty memory for Input Message
-    LEN BYTE DUP(?)             ; Input Length
-    OUTER_COUNTER DWORD DUP(?)  ; Inner loop counter
-    DISPLAY_OUTER_COUNTER DWORD DUP(?)
-    
+;-------------------------------------------------------
+; String length data
+MSG_LEN DWORD ?
+MSG_ENC_LEN DWORD ?
+;-------------------------------------------------------
 .data 
-    KEY_0 DWORD 1   ; Key
-    KEY_1 DWORD 3
-    KEY_2 DWORD 50
-    KEY_3 DWORD 100
-    
-    DELTA DWORD 9e3779b9H
-    SUM DWORD 0
-    INNER_COUNTER DWORD 32 
+;-------------------------------------------------------
+; Line
+LINE_1 BYTE "--------------------------------------",0
+;-------------------------------------------------------
+
+;-------------------------------------------------------
+; User Prompt To Enter The String
+PROMPT1 BYTE "Enter a String: ",0
+PROMPT2 BYTE "Message = ",0
+PROMPT3 BYTE "ENC_Message = ",0
+;-------------------------------------------------------
+;-------------------------------------------------------
+; Input Message Data
+MAX = 80                          ;max chars to read
+MSG BYTE MAX+1 DUP (?)            ;room for null
+MSG_ENC DWORD MAX+1 DUP(?)        
+;-------------------------------------------------------
+DELTA DWORD 9e3779b9H
+SUM DWORD 0
+
+KEY_0 DWORD 1   ; Key
+KEY_1 DWORD 3
+KEY_2 DWORD 50
+KEY_3 DWORD 100
+
 
 .code 
 main PROC 
